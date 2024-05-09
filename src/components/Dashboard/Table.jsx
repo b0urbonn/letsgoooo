@@ -1,11 +1,11 @@
 import React from 'react';
 import './Table.css';
 
-const Table = ({ products = [], handleEdit = () => {}, handleDelete = () => {} }) => {
+const Table = ({ products, handleEdit, handleDelete }) => {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'PHP',
-    minimumFractionDigits: 2, // Ensure at least 2 decimal places for price formatting
+    minimumFractionDigits: null,
   });
 
   const getRemarks = (quantities) => {
@@ -36,18 +36,18 @@ const Table = ({ products = [], handleEdit = () => {}, handleDelete = () => {} }
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(products) && products.length > 0 ? (
+          {products.length > 0 ? (
             products.map((product, i) => (
               <tr key={product.id}>
                 <td>{i + 1}</td>
-                <td>{product.Product || ''}</td> {/* Accessing properties safely */}
-                <td>{product.Category || ''}</td>
+                <td>{product.Product}</td>
+                <td>{product.Category}</td>
                 <td style={{ color: product.Quantities < 10 ? 'red' : 'inherit' }}>
-                  {product.Quantities || 0} {product.Quantities < 10 ? '⚠️' : ''}
+                  {product.Quantities} {product.Quantities < 10 ? '⚠️' : ''}
                 </td>
-                <td>{getRemarks(product.Quantities || 0)}</td>
-                <td>{typeof product.price === 'number' ? formatter.format(product.price) : ''}</td> {/* Formatting price only if it's a number */}
-                <td>{product.date || ''}</td>
+                <td>{getRemarks(product.Quantities)}</td>
+                <td>{formatter.format(product.price)}</td>
+                <td>{product.date}</td>
                 <td className="text-right">
                   <button onClick={() => handleEdit(product.id)} className="button muted-button">
                     Edit
@@ -72,3 +72,5 @@ const Table = ({ products = [], handleEdit = () => {}, handleDelete = () => {} }
 };
 
 export default Table;
+
+
