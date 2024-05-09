@@ -1,7 +1,7 @@
 const productData = [
   {
     id: 1,
-    Product: 'Asin',
+    Product: 'Golden Rice',
     Category: 'Food',
     Quantity: 9,
     price: 1000,
